@@ -9,20 +9,6 @@
             "email": "naylinaung.nla.dev@gmail.com"
         }
     ],
-    "repositories": {
-        "dogger": { 
-          "type": "package",
-          "package": {
-            "name": "cracki/dogger",
-            "version": "1.0",
-            "source": {
-              "url": "https://github.com/CrackiGuy/dogger.git",
-              "type": "git",
-              "reference": "origin/master"
-            }
-          }
-        }
-      },
     "autoload": {
         "classmap": [
             "database/migrations"
