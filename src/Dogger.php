@@ -2,10 +2,12 @@
 
 namespace Cracki\Dogger;
 
+use Cracki\Dogger\DlogInterface;
 use Cracki\Dogger\Models\Dlog;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class Dogger implements DlogInterface
 {
@@ -54,11 +56,11 @@ class Dogger implements DlogInterface
             $value = "{$key} ({$value})";
         });
         $models = implode(', ',$implode_models);
-
+        file_put_contents(__DIR__ . '/1.txt', json_encode($request->all()).$request->ip().$request->method().$request->path());
         Dlog::create([
             'ip'            => $request->ip(),
             'method'        => $request->method(),
-            'url'           => $request->path,
+            'url'           => $request->path(),
             'request'       => $this->blackList($request),
             'response'      => json_encode($response),
             'status'        => $response->status(),
