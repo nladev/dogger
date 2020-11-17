@@ -1,0 +1,29 @@
+{
+    "name": "cracki/dogger",
+    "description": "Log for http request and response",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nay Lin Aung",
+            "email": "naylinaung.nla.dev@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "classmap": [
+            "database/migrations"
+        ],
+        "psr-4": {
+            "Cracki\\Dogger\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Cracki\\Dogger\\DoggerServiceProvider"
+            ]
+        }
+    },
+    "require": {}
+}
