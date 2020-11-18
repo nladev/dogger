@@ -25,8 +25,16 @@ Route::group([
     ...
 });
 ```
+### Custom Error
+```json
+//response json as follow
+{
+    'result' : 'error', // (or 'success' accepted only 2 enum)
+    ...
+}
+```
 ### Logs View
-![Logs View](/screenshot.png?raw=true "Logs View")
+![screenshot](screenshot.png)
 ### Routes List
 |route    |method   |description
 |:----|:----|:----|
