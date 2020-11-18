@@ -9,6 +9,7 @@
             "email": "naylinaung.nla.dev@gmail.com"
         }
     ],
+    "minimum-stability": "dev",
     "autoload": {
         "classmap": [
             "database/migrations"

@@ -10,8 +10,10 @@ class CreateDlogsTable extends Migration
     {
         Schema::create('dlogs', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string("ip");
             $table->string('url');
             $table->string('method')->index();
+            $table->longText('header')->nullable();
             $table->longText('request')->nullable();
             $table->longText('response')->nullable();
             $table->decimal('duration', 6, 4);
@@ -19,8 +21,10 @@ class CreateDlogsTable extends Migration
             $table->string('controller');
             $table->string('action');
             $table->string('models');
-            $table->string("ip");
+            $table->string('exception')->nullable();
             $table->timestamps();
+
+            $table->index('created_at');
         });
     }
     public function down()

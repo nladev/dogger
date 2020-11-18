@@ -56,19 +56,30 @@ class Dogger implements DlogInterface
             $value = "{$key} ({$value})";
         });
         $models = implode(', ',$implode_models);
-        file_put_contents(__DIR__ . '/1.txt', json_encode($request->all()).$request->ip().$request->method().$request->path());
         Dlog::create([
             'ip'            => $request->ip(),
             'method'        => $request->method(),
             'url'           => $request->path(),
+            'header'        => $this->headers($request),
             'request'       => $this->blackList($request),
             'response'      => json_encode($response),
             'status'        => $response->status(),
             'duration'      => $end - LARAVEL_START,
             'controller'    => $controller,
             'action'        => $action,
-            'models'        => $models
+            'models'        => $models,
+            'exception'     => !is_null($response->exception) ? json_encode([
+                'exception' => (string)(get_class($response->exception)),
+                'code'      => $response->exception->getCode(),
+                'message'   => $response->exception->getMessage(),
+            ]) : null
         ]);
+    }
+
+    public function getLogs()
+    {
+        $data = Dlog::all();
+        return $data;
     }
 
     public function getLog()
@@ -90,12 +101,24 @@ class Dogger implements DlogInterface
     {
         $allFields = $request->all();
 
-        foreach (config('apilog.dont_log', []) as $key) {
+        foreach (config('dogger.dont_log', []) as $key) {
             if (array_key_exists($key, $allFields)) {
                 unset($allFields[$key]);
             }
         }
 
         return json_encode($allFields);
+    }
+    protected function headers($request)
+    {
+        $headers = [];
+        foreach (config('dogger.headers', []) as $header) {
+            file_put_contents(__DIR__."/test.txt",json_encode($request->header($header)));
+            if (!empty($header = $request->header($header))) {
+                $headers[$header] = $header;
+            }
+        }
+
+        return json_encode($headers);
     }
 }
