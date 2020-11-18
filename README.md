@@ -26,7 +26,7 @@ Route::group([
 });
 ```
 ### Custom Error
-```json
+```php
 //response json as follow
 {
     'result' : 'error', // (or 'success' accepted only 2 enum)
