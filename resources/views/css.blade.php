@@ -31,4 +31,8 @@ integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xX
         padding: 5px 10px 5px 5px;
         border-radius: 5px;
     }
+    .error{
+        color: #721c24;
+        background-color: #f8d7da;
+    }
 </style>

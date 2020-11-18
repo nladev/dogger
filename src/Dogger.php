@@ -33,6 +33,7 @@ class Dogger implements DlogInterface
     {
         $controller = "";
         $action = "";
+        $result = "";
 
         $currentRouteAction = Route::currentRouteAction();
 
@@ -50,24 +51,36 @@ class Dogger implements DlogInterface
 
         $end = microtime(true);
 
+        //Models Prepare
         $implode_models = $this->models;
-
         array_walk($implode_models, function(&$value, $key) {
             $value = "{$key} ({$value})";
         });
         $models = implode(', ',$implode_models);
+
+        //Result exception detect
+        if(!is_null($response->exception)){
+            $result = 'error';
+        }else{
+            //Custom user result
+            $result = json_decode($response->getContent(),true)['result'] ?? 'success';
+        }
+
+        
+
         Dlog::create([
             'ip'            => $request->ip(),
             'method'        => $request->method(),
             'url'           => $request->path(),
             'header'        => $this->headers($request),
             'request'       => $this->blackList($request),
-            'response'      => json_encode($response),
+            'response'      => !is_null($response->exception) ? null : $response->getContent(),
             'status'        => $response->status(),
             'duration'      => $end - LARAVEL_START,
             'controller'    => $controller,
             'action'        => $action,
             'models'        => $models,
+            'result'        => $result,
             'exception'     => !is_null($response->exception) ? json_encode([
                 'exception' => (string)(get_class($response->exception)),
                 'code'      => $response->exception->getCode(),
@@ -113,7 +126,6 @@ class Dogger implements DlogInterface
     {
         $headers = [];
         foreach (config('dogger.headers', []) as $header) {
-            file_put_contents(__DIR__."/test.txt",json_encode($request->header($header)));
             if (!empty($header = $request->header($header))) {
                 $headers[$header] = $header;
             }

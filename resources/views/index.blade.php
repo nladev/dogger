@@ -30,6 +30,19 @@
                     <path fill-rule="evenodd" d="M7 11.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5z"/>
                   </svg>
               </button>
+              <form method="POST" action="{{ route('dogger.delete') }}">
+                {{ csrf_field() }}
+                {{ method_field('DELETE') }}
+                <div class="form-group">
+                    <button type="submit" class="btn btn-danger btn-sm">
+                        Delete All 
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                        </svg>
+                    </button>
+                </div>
+            </form>
             </nav>
           </div>
           <br>
@@ -37,30 +50,55 @@
             {{-- <h3 class="text-center">Filter Result</h3> --}}
             <div class="list-group list-group-flush">
                 @forelse ($logs as $key => $log)
-                <div href="#" class="list-group-item list-group-item-action">
-                    <div class="d-flex w-100 justify-content-between" data-toggle="collapse" data-target="#collapse{{$key}}">
-                        @if ($log->response > 400)
-                        <div class="method-bg-danger">
-                            <button class="btn btn-danger btn-sm">{{$log->method}}</button> /{{$log->url}}
+                <div class="list-group-item list-group-item-action">
+                    <div class="row" data-toggle="collapse" data-target="#collapse{{$key}}">
+                        <div class="col-4">
+                            @if ($log->status >= 400)
+                            <div class="method-bg-danger">
+                                <button class="btn btn-danger btn-sm">{{$log->method}}</button> /{{$log->url}}
+                            </div>
+                            @elseif($log->status >= 300)
+                            <div class="method-bg-waring">
+                                <button class="btn btn-warning btn-sm">{{$log->method}}</button> /{{$log->url}}
+                            </div>
+                            @elseif($log->status >= 200)
+                            <div class="method-bg-success">
+                                <button class="btn btn-success btn-sm">{{$log->method}}</button> /{{$log->url}}
+                            </div>
+                            @else
+                            <div class="method-bg-primary">
+                                <button class="btn btn-primary btn-sm">{{$log->method}}</button> /{{$log->url}}
+                            </div>
+                            @endif
                         </div>
-                        @elseif($log->response > 300)
-                        <div class="method-bg-waring">
-                            <button class="btn btn-warning btn-sm">{{$log->method}}</button> /{{$log->url}}
+                        <div class="col-2">
+                            <small><b>IP :</b> {{$log->ip}}</small>
                         </div>
-                        @elseif($log->response > 200)
-                        <div class="method-bg-success">
-                            <button class="btn btn-success btn-sm">{{$log->method}}</button> /{{$log->url}}
+                        <div class="col-2">
+                            <small><b>Date :</b> {{$log->created_at}}</small>
                         </div>
-                        @else
-                        <div class="method-bg-primary">
-                            <button class="btn btn-primary btn-sm">{{$log->method}}</button> /{{$log->url}}
+                        
+                        <div class="col-2">
+                            <small><b>Duration :</b> {{$log->duration * 1000}} ms</small>
                         </div>
-                        @endif
-                            
-                        <small><b>IP :</b> {{$log->ip}}</small>
-                        <small><b>Date :</b> {{$log->created_at}}</small>
-                        <small><b>Duration :</b> {{$log->duration * 1000}} ms</small>
-                        <large><span class="badge badge-success user-select-none">200</span></large>
+                        <div class="col-1">
+                            @if($log->result == 'error')
+                                <large><span class="badge badge-danger user-select-none">{{$log->result}}</span></large>
+                            @else
+                                <large><span class="badge badge-success user-select-none">{{$log->result}}</span></large>
+                            @endif
+                        </div>
+                        <div class="col-1">
+                            @if ($log->status >= 400)
+                            <large><span class="badge badge-danger user-select-none">{{$log->status}}</span></large>
+                            @elseif($log->status >= 300)
+                            <large><span class="badge badge-success user-select-none">{{$log->status}}</span></large>
+                            @elseif($log->status >= 200)
+                            <large><span class="badge badge-success user-select-none">{{$log->status}}</span></large>
+                            @else
+                            <large><span class="badge badge-info user-select-none">{{$log->status}}</span></large>
+                            @endif
+                        </div>
                     </div>
                     
                     <div class="collapse" id="collapse{{$key}}">

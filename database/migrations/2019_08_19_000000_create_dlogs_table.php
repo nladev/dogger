@@ -22,6 +22,7 @@ class CreateDlogsTable extends Migration
             $table->string('action');
             $table->string('models');
             $table->string('exception')->nullable();
+            $table->enum('result', ['success', 'error'])->default('success');
             $table->timestamps();
 
             $table->index('created_at');
