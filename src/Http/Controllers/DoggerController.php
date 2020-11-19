@@ -30,7 +30,7 @@ class DoggerController extends Controller
     }
     public function delete()
     {
-        Dlog::trunscate();
+        Dlog::truncate();
         return redirect()->back();
     }
     
