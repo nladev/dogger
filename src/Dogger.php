@@ -126,8 +126,8 @@ class Dogger implements DlogInterface
     {
         $headers = [];
         foreach (config('dogger.headers', []) as $header) {
-            if (!empty($header = $request->header($header))) {
-                $headers[$header] = $header;
+            if (!empty($request->header($header))) {
+                $headers[$header] = $request->header($header);
             }
         }
 

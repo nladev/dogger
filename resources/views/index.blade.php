@@ -115,9 +115,26 @@
                         </div>
                         <hr>
                         <div class="d-flex w-100 justify-content-between">
-                            <button class="btn btn-primary btn-sm" type="button">Request JSON</button>
-                            <button class="btn btn-primary btn-sm" type="button">Response JSON</button>
-                            <button class="btn btn-primary btn-sm" type="button">Exceptions</button>
+                            <button class="btn btn-primary header" data-id="{{$log->id}}">Header</button>
+                            <div class="overlay" id="header{{$log->id}}">
+                                <button class="btn btn-dark preclose">back</button>
+                                <hr><pre>{{$log->header}}</pre>
+                            </div>
+                            <button class="btn btn-primary request" data-id="{{$log->id}}">Request</button>
+                            <div class="overlay" id="request{{$log->id}}">
+                                <button class="btn btn-dark preclose">back</button>
+                                <hr><pre>{{$log->request}}</pre>
+                            </div>
+                            <button class="btn btn-primary response" data-id="{{$log->id}}">Response</button>
+                            <div class="overlay" id="response{{$log->id}}">
+                                <button class="btn btn-dark preclose">back</button>
+                                <hr><pre>{{$log->response}}</pre>
+                            </div>
+                            <button class="btn btn-primary exception" data-id="{{$log->id}}">Exception</button>
+                            <div class="overlay" id="exception{{$log->id}}">
+                                <button class="btn btn-dark preclose">back</button>
+                                <hr><pre>{{$log->exception}}</pre>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -128,6 +145,8 @@
               @endforelse
                 
             </div>
+            <hr>
+            {{ $logs->links() }}
         </div>
     </div>
 </body>

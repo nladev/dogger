@@ -4,7 +4,7 @@ namespace Cracki\Dogger\Http\Controllers;
 
 use Cracki\Dogger\DlogInterface;
 use App\Http\Controllers\Controller;
-
+use Cracki\Dogger\Models\Dlog;
 class DoggerController extends Controller
 {
     /**
@@ -22,22 +22,15 @@ class DoggerController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(DlogInterface $logger)
+    public function index()
     {
-        $logs = $logger->getLogs();
-        
-        if(count($logs)>0){
-            $logs = $logs->sortByDesc('created_at');
-        }
-        else{
-            $logs = [];
-        }
+        $logs = Dlog::orderBy('created_at','DESC')->paginate(10);
         return view('dogger::index',compact('logs'));
         
     }
-    public function delete(DlogInterface $logger)
+    public function delete()
     {
-        $logger->deleteLog();
+        Dlog::trunscate();
         return redirect()->back();
     }
     

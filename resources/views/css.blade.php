@@ -35,4 +35,24 @@ integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xX
         color: #721c24;
         background-color: #f8d7da;
     }
+    .overlay {
+        position: fixed;
+        padding: 20px;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(255, 255, 255, 1);
+        z-index: 1000;
+        cursor: pointer;
+    }
+    pre {
+        white-space: pre-wrap;
+        background: black;
+        color: green;
+        padding: 15px;
+        }
 </style>
