@@ -10,7 +10,7 @@ return [
     |
     */
     'dont_log' => [
-        'password', 'password_confirmation', 'new_password', 'old_password',
+        'password', 'new_password'
     ],
 
     /*

@@ -2,6 +2,7 @@
 
 namespace Cracki\Dogger;
 
+use Cracki\Dogger\Console\ClearCommand;
 use Illuminate\Support\ServiceProvider;
 use Cracki\Dogger\DlogInterface;
 use Cracki\Dogger\Http\Middleware\Dogger as DoggerMiddleware;
@@ -26,7 +27,11 @@ class DoggerServiceProvider extends ServiceProvider
         //Load routes
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
         $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
-        
+
+        //Load command
+        $this->commands([
+            ClearCommand::class
+        ]);
     }
 
     public function register()

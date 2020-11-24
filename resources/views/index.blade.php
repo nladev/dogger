@@ -146,7 +146,7 @@
                 
             </div>
             <hr>
-            {{ $logs->links() }}
+            {{ $logs->links('dogger::paginate') }}
         </div>
     </div>
 </body>
