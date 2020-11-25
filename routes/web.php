@@ -18,6 +18,7 @@ Route::group([
     'namespace' => 'Cracki\Dogger\Http\Controllers'
 ], function () {
     Route::get('/', 'DoggerController@index')->name("dogger.index");
+    Route::any('/search', 'DoggerController@search')->name("dogger.search");
     Route::delete('/delete', 'DoggerController@delete')->name("dogger.delete");
 });
 
