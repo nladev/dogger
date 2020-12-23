@@ -63,7 +63,7 @@ class Dogger implements DlogInterface
             $result = 'error';
         }else{
             //Custom user result
-            $result = json_decode($response->getContent(),true)['result'] ?? 'success';
+            $result = (json_decode($response->getContent(),true)['result'] == 'error') ? 'error' : 'success';
         }
 
         
